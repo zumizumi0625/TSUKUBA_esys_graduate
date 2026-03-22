@@ -1,0 +1,344 @@
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1a1a2e;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+/* Guide */
+.guide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.guide summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #334155;
+  user-select: none;
+}
+
+.guide ol {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+.guide ul {
+  margin: 4px 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.guide a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.controls label {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed #aaa;
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 24px;
+}
+
+.drop-zone.dragging {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.drop-zone p {
+  margin: 4px 0;
+  color: #666;
+}
+
+.file-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 20px;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.file-btn:hover {
+  background: #2563eb;
+}
+
+/* Status */
+.loading {
+  text-align: center;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.error {
+  text-align: center;
+  color: #dc2626;
+  font-weight: 600;
+  background: #fef2f2;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Result */
+.result h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+/* Cards */
+.card, .summary-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.card.warning {
+  border-color: #fbbf24;
+  background: #fffbeb;
+}
+
+.card h3, .summary-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card h4 {
+  margin: 12px 0 6px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.ng {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* Progress bar */
+.progress-bar {
+  flex: 1;
+  min-width: 120px;
+  max-width: 300px;
+  height: 22px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 999px;
+  transition: width 0.4s;
+}
+
+.progress-bar span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Summary */
+.summary-card {
+  background: #f8fafc;
+}
+
+.summary-item.main {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.summary-item .label {
+  display: block;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.summary-item .value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.summary-item .unit {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.summary-item .progress-bar {
+  margin: 8px auto;
+  max-width: 400px;
+}
+
+.remaining {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #dc2626;
+  margin-top: 4px;
+}
+
+.ok-text {
+  color: #166534 !important;
+  font-weight: 700;
+}
+
+.ng-text {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* Table */
+.summary-table table, .card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.summary-table th, .summary-table td,
+.card table th, .card table td {
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.summary-table th {
+  font-size: 0.8rem;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+/* Course list */
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-list li {
+  padding: 4px 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.course-list .grade {
+  color: #64748b;
+  margin-left: 4px;
+}
+
+.course-list .code {
+  color: #3b82f6;
+  font-family: monospace;
+}
+
+.empty {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Missing */
+.missing {
+  background: #fef2f2;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 8px;
+}
+
+.missing h4 {
+  color: #dc2626;
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+}
+
+.missing ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.missing li {
+  font-size: 0.85rem;
+  color: #991b1b;
+}
+
+/* Subcategory */
+.subcategory {
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 3px solid #e5e7eb;
+  margin-bottom: 8px;
+}
