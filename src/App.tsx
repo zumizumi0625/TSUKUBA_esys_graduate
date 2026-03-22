@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { parseAndAnalyze } from './gradCheck'
 import './App.css'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,20 +17,12 @@ function App() {
     setError('')
     setResult(null)
 
-    const form = new FormData()
-    form.append('file', file)
-    const url = major ? `/api/check?major=${major}` : '/api/check'
-
     try {
-      const res = await fetch(url, { method: 'POST', body: form })
-      const data = await res.json()
-      if (!res.ok) {
-        setError(data.error || 'エラーが発生しました')
-      } else {
-        setResult(data)
-      }
-    } catch {
-      setError('サーバーに接続できません。バックエンドが起動しているか確認してください。')
+      const content = await file.text()
+      const data = parseAndAnalyze(content, major || undefined)
+      setResult(data)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'エラーが発生しました')
     } finally {
       setLoading(false)
     }
@@ -193,13 +186,13 @@ function ResultView({ data }: { data: Result }) {
         <h3>卒業研究の履修条件 <StatusBadge ok={sc.met} /></h3>
         <table>
           <tbody>
-            {[
+            {([
               ['専門必修(倫理・卒研除く)', sc.senmon_hisshu],
               ['専門基礎必修', sc.senmon_kiso],
               ['英語', sc.eigo],
               ['情報', sc.joho],
               ['95単位以上', sc.total_95],
-            ].map(([label, item]: [string, Result]) => (
+            ] as [string, Result][]).map(([label, item]) => (
               <tr key={label}>
                 <td>{label}</td>
                 <td>{item.credits} / {item.required}</td>

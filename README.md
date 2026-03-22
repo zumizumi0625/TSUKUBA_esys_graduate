@@ -1,73 +1,46 @@
-# React + TypeScript + Vite
+# 工学システム学類 卒業要件チェッカー
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+筑波大学 工学システム学類の卒業要件充足状況を判定するWebアプリです。
+TWINSからダウンロードした成績CSVをアップロードするだけで、カテゴリ別の単位数・過不足・卒研履修条件を一覧表示します。
 
-Currently, two official plugins are available:
+全ての処理はブラウザ内で完結するため、成績データがサーバーに送信されることはありません。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 対応主専攻
 
-## React Compiler
+- 知的・機能工学システム主専攻（知機）
+- エネルギー・メカニクス主専攻（エネメカ）
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 使い方
 
-## Expanding the ESLint configuration
+1. [TWINS](https://twins.tsukuba.ac.jp/campusweb/) にログイン
+2. 「成績」→「成績照会」を開く
+3. ページ最下部までスクロールし「ダウンロード」をクリック
+4. 出力形式選択画面で以下を設定:
+   - ファイル形式: **CSV**
+   - 文字コード: **Unicode (UTF-8)**
+   - BOM有無: **BOMなし**
+5. 「出力」をクリックしてCSVファイルを保存
+6. 本サイトにCSVをアップロード（ドラッグ&ドロップまたはファイル選択）
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 判定項目
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 専門科目 必修 / 選択（サブカテゴリ別）
+- 専門基礎科目 必修
+- 基礎科目 共通必修（総合・体育・英語・情報）
+- 基礎科目 選択 / 関連科目
+- 卒業研究 履修条件チェック
+- 卒研+倫理 取得後の見込み単位数
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 開発
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev      # 開発サーバー起動 (http://localhost:5173)
+npm run build    # 本番ビルド (dist/ に出力)
+npm run preview  # ビルド結果のプレビュー
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 注意事項
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 本ツールの判定結果は参考値です。正式な卒業判定は教務で確認してください。
+- 卒業研究A・B、工学者のための倫理は成績CSVに含まれないため、未修得として表示されます。
