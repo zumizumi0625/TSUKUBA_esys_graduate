@@ -229,6 +229,10 @@ function startsWithAny(str: string, prefixes: string[]): boolean {
   return prefixes.some(p => str.startsWith(p))
 }
 
+function buildNameSet(codes: Record<string, CodeEntry>): Set<string> {
+  return new Set(Object.values(codes).map(e => e.name))
+}
+
 // ============================================================
 // 科目分類
 // ============================================================
@@ -237,6 +241,8 @@ function classifyCourses(courses: Record<string, Course>, majorKey: string) {
   const majorDef = MAJORS[majorKey]
   const jikkenCodes = getAllJikkenCodes(majorDef)
   const senmonHisshuCodes: Record<string, CodeEntry> = { ...COMMON_SENMON_HISSHU, ...jikkenCodes }
+  const senmonHisshuNames = buildNameSet(senmonHisshuCodes)
+  const senmonKisoNames = buildNameSet(SENMON_KISO_CODES)
 
   const result: Record<string, Record<string, Course>> = {
     senmon_hisshu: {},
@@ -255,9 +261,9 @@ function classifyCourses(courses: Record<string, Course>, majorKey: string) {
       continue
     }
 
-    if (code in senmonHisshuCodes) {
+    if (code in senmonHisshuCodes || senmonHisshuNames.has(c.name)) {
       result.senmon_hisshu[code] = c
-    } else if (code in SENMON_KISO_CODES) {
+    } else if (code in SENMON_KISO_CODES || senmonKisoNames.has(c.name)) {
       result.senmon_kiso[code] = c
     } else if (code.startsWith('FG')) {
       result.senmon_sentaku[code] = c
@@ -302,10 +308,12 @@ function analyze(courses: Record<string, Course>, majorKey: string): AnalysisRes
     .filter(c => c.passed)
     .reduce((s, c) => s + c.credits, 0)
 
-  // 専門必修: 未修得科目（共通科目）
+  // 専門必修: 未修得科目（共通科目）- コードOR科目名で判定
+  const shValues = Object.values(classified.senmon_hisshu)
   const missingHisshu: { code: string; name: string; credits: number }[] = []
   for (const [code, entry] of Object.entries(COMMON_SENMON_HISSHU)) {
-    if (!(code in classified.senmon_hisshu)) {
+    if (!(code in classified.senmon_hisshu) &&
+        !shValues.some(c => c.name === entry.name)) {
       missingHisshu.push({ code, name: entry.name, credits: entry.credits })
     }
   }
@@ -317,10 +325,12 @@ function analyze(courses: Record<string, Course>, majorKey: string): AnalysisRes
   const sotsukenMissing = SOTSUKEN.map(([name, credits]) => ({ name, credits }))
   const rinriMissing = { name: RINRI[0], credits: RINRI[1] }
 
-  // 専門基礎: 未修得科目
+  // 専門基礎: 未修得科目 - コードOR科目名で判定
+  const skValues = Object.values(classified.senmon_kiso)
   const missingKiso: { code: string; name: string; credits: number }[] = []
   for (const [code, entry] of Object.entries(SENMON_KISO_CODES)) {
-    if (!(code in classified.senmon_kiso)) {
+    if (!(code in classified.senmon_kiso) &&
+        !skValues.some(c => c.name === entry.name)) {
       missingKiso.push({ code, name: entry.name, credits: entry.credits })
     }
   }
